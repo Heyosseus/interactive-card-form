@@ -1,12 +1,10 @@
 
 import styled from 'styled-components';
-import Main from '../../Main';
 import path from '../../assets/Path.png'
 
 const BackPage = ({ isVisible, setIsVisible }: any) => {
   return (
-    <div>
-      {/* <Main /> */}
+    <Center>
       <Content>
         <Circle>
           <Path></Path>
@@ -14,14 +12,27 @@ const BackPage = ({ isVisible, setIsVisible }: any) => {
         <Heading>THANK YOU!</Heading>
         <Paragraph>We’ve added your card details</Paragraph>
         <Button onClick={() => setIsVisible(!isVisible)}>
-          CONTINUE
+          Continue
         </Button>
       </Content>
-    </div>
+    </Center>
   );
 };
 
 export default BackPage;
+
+const Center = styled.div`
+  @media screen and (min-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vh;
+    height: 45vw;
+    margin-left: 42px;
+  }
+`
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,4 +92,7 @@ const Button = styled.button`
   font-family: 'Space Grotesk', sans-serif;
   font-size: 18px;
   line-height: 23px;
+  @media screen and (min-width: 700px) {
+    width: 381px;
+  }
 `;

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import Main from '../../Main'
+
 
 
 const Content = ({isVisible, setIsVisible}:any) => {
   return (
-    <div>
-      {/* <Main /> */}
+    <Center>
       <Form>
         <Label>CARDHOLDER NAME</Label>
         <Input></Input>
@@ -26,11 +25,23 @@ const Content = ({isVisible, setIsVisible}:any) => {
         </Details>
       </Form>
       <Button onClick={()=> setIsVisible(!isVisible)}>Confirm</Button>
-    </div>
+    </Center>
   );
 };
 
 export default Content;
+
+const Center = styled.div`
+  @media screen and (min-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vh;
+    height: 45vw;
+    margin-left: 42px;
+  }
+`
 
 const Form = styled.form`
   display: flex;
@@ -69,6 +80,9 @@ const Input = styled.input.attrs({
     font-weight: 500;
     color: #dfdee0;
     padding-left: 16px;
+  }
+  @media screen and (min-width: 700px) {
+    width: 381px;
   }
 `;
 
@@ -123,6 +137,9 @@ const InputMonth = styled.input.attrs({
     color: #dfdee0;
     text-align: center;
   }
+  @media screen and (min-width: 700px) {
+    width: 81px;
+  }
 `;
 const InputYear = styled.input.attrs({
   type: 'number',
@@ -143,6 +160,9 @@ const InputYear = styled.input.attrs({
     font-weight: 500;
     color: #dfdee0;
     text-align: center;
+  }
+  @media screen and (min-width: 700px) {
+    width: 81px;
   }
 `;
 
@@ -166,6 +186,9 @@ const InputCVC = styled.input.attrs({
     color: #dfdee0;
     text-align: center;
   }
+  @media screen and (min-width: 700px) {
+    width: 191px;
+  }
 `;
 
 const Button = styled.button`
@@ -179,4 +202,7 @@ const Button = styled.button`
   font-family: 'Space Grotesk', sans-serif;
   font-size: 18px;
   line-height: 23px;
+  @media screen and (min-width: 700px) {
+    width: 381px;
+  }
 `;
