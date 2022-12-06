@@ -37,13 +37,14 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(${bg});
+  /* background-image: url(${bg}); */
   background: #21092f;
   height: 240px;
+  min-width: 100vw;
 
   @media screen and (min-width: 700px) {
     width: 483px;
-    height: 100vh;
+    min-height: 100vh;
     padding: 20px 63px;
   }
 `;
