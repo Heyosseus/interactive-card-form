@@ -92,6 +92,7 @@ const Button = styled.button`
   font-family: 'Space Grotesk', sans-serif;
   font-size: 18px;
   line-height: 23px;
+  cursor: pointer;
   @media screen and (min-width: 700px) {
     width: 381px;
   }

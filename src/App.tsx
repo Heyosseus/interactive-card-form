@@ -7,20 +7,46 @@ import { useState } from 'react';
 
 function App() {
   const [isVisible, setIsVisible] = useState<boolean>(true);
-
+  const [name, setName] = useState<string>('');
+  const [month, setMonth] = useState<number>();
+  const [year, setYear] = useState<number>();
+  const [cvc, setCvc] = useState<number>();
+  const [mask, setMask] = useState<number>();
   return (
     <body>
       <ParentContainer>
-        <Main />
+        <Main
+          name={name}
+          setName={setName}
+          month={month}
+          year={year}
+          cvc={cvc}
+          mask={mask}
+        />
         {isVisible ? (
           <Content
             isVisible={isVisible}
             setIsVisible={setIsVisible}
+            name={name}
+            setName={setName}
+            month={month}
+            setMonth={setMonth}
+            year={year}
+            setYear={setYear}
+            cvc={cvc}
+            setCvc={setCvc}
+            mask={mask}
+            setMask={setMask}
           />
         ) : (
           <BackPage
             isVisible={isVisible}
             setIsVisible={setIsVisible}
+            name={name}
+            setName={setName}
+            month={month}
+            cvc={cvc}
+            mask={mask}
           />
         )}
       </ParentContainer>

@@ -1,28 +1,28 @@
 import styled from "styled-components";
 
-const Main = () => {
+const Main = ({name, month, year, cvc, mask}:any) => {
   return (
     <div>
       <Container>
         <Image>
           <BackCard>
             <Rectangle></Rectangle>
-            <CVC>000</CVC>
+            <CVC>{cvc || '123'}</CVC>
           </BackCard>
           <FrontCard>
             <div style={{ display: "flex" }}>
               <Circles></Circles>
               <LittleCircle></LittleCircle>
             </div>
-            <Numbers>0000 0000 0000 0000</Numbers>
+            <Numbers>{mask || '0000 0000 0000 0000'}</Numbers>
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
-              <Name>JANE APPLESEED</Name>
-              <Date>00/00</Date>
+              <Name>{name || 'JANE APPLEASED'} </Name>
+              <Date>{month && year ? `${month}/${year}` : "00/00"}</Date>
             </div>
           </FrontCard>
         </Image>
@@ -98,6 +98,7 @@ const CVC = styled.div`
   font-family: "Space Grotesk", sans-serif;
   align-items: center;
   display: flex;
+  padding-right: 12px;
   @media screen and (min-width: 700px) {
     width: 361px;
     height: 38px;
@@ -168,12 +169,13 @@ const Name = styled.div`
   width: 100px;
   height: 11px;
   font-size: 9px;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 500;
   line-height: 12px;
   letter-spacing: 1.2px;
   color: #fff;
   margin: 8px 20px;
+  text-transform: uppercase;
   @media screen and (min-width: 700px) {
     font-size: 14px;
     width: 190px;

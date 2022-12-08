@@ -1,30 +1,110 @@
 import styled from 'styled-components';
+import MaskedInput from 'react-text-mask';
+import './Content.css'
 
 
+const Content = ({
+  isVisible,
+  setIsVisible,
+  name,
+  setName,
+  month,
+  setMonth,
+  year,
+  setYear,
+  cvc,
+  setCvc,
+  setMask
+}: any) => {
+  function nameHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log(e.target.value);
+    setName(e.target.value);
+  }
 
-const Content = ({isVisible, setIsVisible}:any) => {
+  function monthHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setMonth(e.target.value);
+  }
+  function yearHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setYear(e.target.value);
+  }
+  function cvcHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setCvc(e.target.value);
+  }
+  function maskHandler(e: React.ChangeEvent<HTMLInputElement>){
+    setMask(e.target.value)
+  }
+  
   return (
     <Center>
       <Form>
         <Label>CARDHOLDER NAME</Label>
-        <Input></Input>
+        <Input onChange={nameHandler} value={name} />
         <Label>CARD NUMBER</Label>
-        <InputCardNumber></InputCardNumber>
+        {/* <InputCardNumber /> */}
+        <MaskedInput
+          className='input'
+          placeholder="e.g 1234 5678 9123 000"
+          mask={[
+            /[1,2,3,4,5,6,7,8,9]/,
+            /\d/,
+            /\d/,
+            /\d/,
+            ' ',
+            /\d/,
+            /\d/,
+            /\d/,
+            /\d/,
+            ' ',
+            /\d/,
+            /\d/,
+            /\d/,
+            /\d/,
+            ' ',
+            /\d/,
+            /\d/,
+            /\d/,
+            /\d/,
+          ]}
+          onChange={maskHandler}
+        />
+        <Error>Wrong format, numbers only</Error>
         <Details>
           <Container>
             <Label>EXP.DATE (MM/YY)</Label>
             <div style={{ display: 'flex' }}>
-              <InputMonth></InputMonth>
-              <InputYear style={{ marginLeft: '8px' }}></InputYear>
+              <InputMonth
+                maxLength={2}
+                value={month}
+                onChange={monthHandler}
+                required
+                min={1}
+                max={12}
+              />
+              <InputYear
+                style={{ marginLeft: '8px' }}
+                value={year}
+                onChange={yearHandler}
+                maxLength={2}
+
+                // style={{borderColor: year !== 0 ? '' : 'red'}}
+              />
             </div>
+            <Error>Can't be blank</Error>
           </Container>
           <Container style={{ marginLeft: '20px' }}>
             <Label>CVC</Label>
-            <InputCVC></InputCVC>
+            <InputCVC
+              maxLength={3}
+              value={cvc}
+              onChange={cvcHandler}
+            />
+            <Error>Can't be blank</Error>
           </Container>
         </Details>
       </Form>
-      <Button onClick={()=> setIsVisible(!isVisible)}>Confirm</Button>
+      <Button onClick={() => setIsVisible(!isVisible)}>
+        Confirm
+      </Button>
     </Center>
   );
 };
@@ -41,7 +121,8 @@ const Center = styled.div`
     height: 45vw;
     margin-left: 42px;
   }
-`
+`;
+
 
 const Form = styled.form`
   display: flex;
@@ -50,6 +131,14 @@ const Form = styled.form`
   @media screen and (min-width: 700px) {
     display: flex;
   }
+`;
+const Error = styled.div`
+  color: #ff5050;
+  font-size: 12px;
+  line-height: 15px;
+  font-family: 'Space Grotesk', sans-serif;
+  margin-top: 6px;
+  letter-spacing: 0.6px;
 `;
 
 const Label = styled.label`
@@ -74,36 +163,24 @@ const Input = styled.input.attrs({
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 500;
   color: #21092f;
+  padding-left: 16px;
+  outline: none;
+  &:hover {
+    outline: none;
+    border: 1px solid #610595;
+  }
 
   ::placeholder {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     color: #dfdee0;
-    padding-left: 16px;
   }
+  &[value] {
+    text-transform: uppercase;
+  }
+
   @media screen and (min-width: 700px) {
     width: 381px;
-  }
-`;
-
-const InputCardNumber = styled.input.attrs({
-  type: 'number',
-  placeholder: 'e.g 1234 5678 9123 000',
-})`
-  margin-top: 6px;
-  border: 1px solid #dfdee0;
-  height: 45px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 500;
-  color: #21092f;
-
-  ::placeholder {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    color: #dfdee0;
-    padding-left: 16px;
   }
 `;
 
@@ -118,7 +195,7 @@ const Container = styled.div`
 `;
 
 const InputMonth = styled.input.attrs({
-  type: 'number',
+  type: 'tel',
   placeholder: 'MM',
 })`
   margin-top: 6px;
@@ -130,19 +207,28 @@ const InputMonth = styled.input.attrs({
   font-weight: 500;
   color: #21092f;
   width: 72px;
-
+  text-align: center;
+  outline: none;
   ::placeholder {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     color: #dfdee0;
     text-align: center;
   }
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   @media screen and (min-width: 700px) {
     width: 81px;
   }
 `;
 const InputYear = styled.input.attrs({
-  type: 'number',
+  type: 'tel',
   placeholder: 'YY',
 })`
   margin-top: 6px;
@@ -154,12 +240,21 @@ const InputYear = styled.input.attrs({
   font-weight: 500;
   color: #21092f;
   width: 72px;
-
+  text-align: center;
+  outline: none;
   ::placeholder {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     color: #dfdee0;
     text-align: center;
+  }
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
   @media screen and (min-width: 700px) {
     width: 81px;
@@ -167,7 +262,7 @@ const InputYear = styled.input.attrs({
 `;
 
 const InputCVC = styled.input.attrs({
-  type: 'number',
+  type: 'tel',
   placeholder: 'e.g 123',
 })`
   margin-top: 6px;
@@ -179,12 +274,21 @@ const InputCVC = styled.input.attrs({
   font-weight: 500;
   color: #21092f;
   width: 141px;
-
+  text-align: center;
+  outline: none;
   ::placeholder {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     color: #dfdee0;
     text-align: center;
+  }
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
   @media screen and (min-width: 700px) {
     width: 191px;
@@ -202,6 +306,7 @@ const Button = styled.button`
   font-family: 'Space Grotesk', sans-serif;
   font-size: 18px;
   line-height: 23px;
+  cursor: pointer;
   @media screen and (min-width: 700px) {
     width: 381px;
   }

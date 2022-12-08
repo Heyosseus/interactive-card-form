@@ -1,0 +1,22 @@
+.input {
+  margin-top: 6px;
+  border: 1px solid #dfdee0;
+  height: 45px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  color: #21092f;
+  padding-left: 16px;
+  outline: none;
+}
+.input::placeholder{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    color: #dfdee0;
+}
+
+.input:hover {
+  outline: none;
+  border: 1px solid #610595;
+}
