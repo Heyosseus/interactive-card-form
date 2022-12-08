@@ -11,7 +11,7 @@ function App() {
   const [month, setMonth] = useState<number>();
   const [year, setYear] = useState<number>();
   const [cvc, setCvc] = useState<number>();
-  const [mask, setMask] = useState<number>();
+  const [mask, setMask] = useState<number | string>();
   return (
     <body>
       <ParentContainer>

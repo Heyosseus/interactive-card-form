@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MaskedInput from 'react-text-mask';
 import './Content.css'
-
+import { useState, useEffect } from 'react';
 
 const Content = ({
   isVisible,
@@ -14,7 +14,8 @@ const Content = ({
   setYear,
   cvc,
   setCvc,
-  setMask
+  setMask,
+  mask
 }: any) => {
   function nameHandler(e: React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.value);
@@ -33,6 +34,18 @@ const Content = ({
   function maskHandler(e: React.ChangeEvent<HTMLInputElement>){
     setMask(e.target.value)
   }
+  const [monthError, setMonthError] = useState<string>('');
+
+
+  useEffect(() => {
+    if (month === '') {
+      setMonthError('Cant be blank')
+    } else {
+      setMonthError('')
+    }
+  }, [month])
+ 
+ 
   
   return (
     <Center>
@@ -40,7 +53,6 @@ const Content = ({
         <Label>CARDHOLDER NAME</Label>
         <Input onChange={nameHandler} value={name} />
         <Label>CARD NUMBER</Label>
-        {/* <InputCardNumber /> */}
         <MaskedInput
           className='input'
           placeholder="e.g 1234 5678 9123 000"
@@ -65,9 +77,10 @@ const Content = ({
             /\d/,
             /\d/,
           ]}
+
           onChange={maskHandler}
         />
-        <Error>Wrong format, numbers only</Error>
+        
         <Details>
           <Container>
             <Label>EXP.DATE (MM/YY)</Label>
@@ -78,7 +91,7 @@ const Content = ({
                 onChange={monthHandler}
                 required
                 min={1}
-                max={12}
+                max={month}
               />
               <InputYear
                 style={{ marginLeft: '8px' }}
@@ -89,7 +102,9 @@ const Content = ({
                 // style={{borderColor: year !== 0 ? '' : 'red'}}
               />
             </div>
-            <Error>Can't be blank</Error>
+            <Error>{monthError}</Error>
+            
+            
           </Container>
           <Container style={{ marginLeft: '20px' }}>
             <Label>CVC</Label>
@@ -98,7 +113,7 @@ const Content = ({
               value={cvc}
               onChange={cvcHandler}
             />
-            <Error>Can't be blank</Error>
+            <Error>{monthError}</Error>
           </Container>
         </Details>
       </Form>
