@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import MaskedInput from 'react-text-mask';
-import './Content.css'
+import './Content.css';
 import { useState, useEffect } from 'react';
 
 const Content = ({
@@ -19,42 +19,56 @@ const Content = ({
 }: any) => {
   function nameHandler(e: React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.value);
-    setName(e.target.value);
+    setName(e.target.value.replace(/[^a-z]/gi, ' '));
   }
 
   function monthHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setMonth(e.target.value);
+    setMonth(e.target.value.replace(/[^0-9]/gi, ''));
   }
   function yearHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setYear(e.target.value);
+    setYear(e.target.value.replace(/[^0-9]/gi, ''));
   }
   function cvcHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setCvc(e.target.value);
+    setCvc(e.target.value.replace(/[^0-9]/gi, ''));
   }
-  function maskHandler(e: React.ChangeEvent<HTMLInputElement>){
-    setMask(e.target.value)
+  function maskHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setMask(e.target.value);
   }
   const [monthError, setMonthError] = useState<string>('');
-
-
+  const [maskError, setMaskError] = useState<string>('');
   useEffect(() => {
     if (month === '') {
-      setMonthError('Cant be blank')
+      setMonthError('Cant be blank');
     } else {
-      setMonthError('')
+      setMonthError('');
     }
-  }, [month])
- 
- 
-  
+  }, [month]);
+
+  useEffect(() => {
+    if (cvc === '') {
+      setMaskError('Cant be blank');
+    } else {
+      setMaskError('');
+    }
+  }, [cvc]);
+
+  function completed() {
+    if (month !== '' && year !== '' && cvc !== '' && name !== '' && mask!== '') {
+    setIsVisible(!isVisible);
+    }
+    else{
+      setIsVisible(isVisible);
+    }
+  }
+
   return (
     <Center>
       <Form>
         <Label>CARDHOLDER NAME</Label>
-        <Input onChange={nameHandler} value={name} />
+        <Input onChange={nameHandler} value={name} maxLength={30} />
         <Label>CARD NUMBER</Label>
         <MaskedInput
-          className='input'
+          className="input"
           placeholder="e.g 1234 5678 9123 000"
           mask={[
             /[1,2,3,4,5,6,7,8,9]/,
@@ -77,10 +91,9 @@ const Content = ({
             /\d/,
             /\d/,
           ]}
-
           onChange={maskHandler}
         />
-        
+
         <Details>
           <Container>
             <Label>EXP.DATE (MM/YY)</Label>
@@ -103,8 +116,6 @@ const Content = ({
               />
             </div>
             <Error>{monthError}</Error>
-            
-            
           </Container>
           <Container style={{ marginLeft: '20px' }}>
             <Label>CVC</Label>
@@ -113,13 +124,11 @@ const Content = ({
               value={cvc}
               onChange={cvcHandler}
             />
-            <Error>{monthError}</Error>
+            <Error>{maskError}</Error>
           </Container>
         </Details>
       </Form>
-      <Button onClick={() => setIsVisible(!isVisible)}>
-        Confirm
-      </Button>
+      <Button onClick={completed}>Confirm</Button>
     </Center>
   );
 };
@@ -137,7 +146,6 @@ const Center = styled.div`
     margin-left: 42px;
   }
 `;
-
 
 const Form = styled.form`
   display: flex;
