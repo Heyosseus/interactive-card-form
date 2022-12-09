@@ -15,11 +15,11 @@ const Content = ({
   cvc,
   setCvc,
   setMask,
-  mask
+  mask,
 }: any) => {
   function nameHandler(e: React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.value);
-    setName(e.target.value.replace(/[^a-z]/gi, ' '));
+    setName(e.target.value.replace(/[^a-z]\s/gi, ''));
   }
 
   function monthHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -53,10 +53,15 @@ const Content = ({
   }, [cvc]);
 
   function completed() {
-    if (month !== '' && year !== '' && cvc !== '' && name !== '' && mask!== '') {
-    setIsVisible(!isVisible);
-    }
-    else{
+    if (
+      month !== '' &&
+      year !== '' &&
+      cvc !== '' &&
+      name !== '' &&
+      mask !== ''
+    ) {
+      setIsVisible(!isVisible);
+    } else {
       setIsVisible(isVisible);
     }
   }
